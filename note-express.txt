@@ -1,0 +1,45 @@
+node.js只提供了构建应用基本所需的底层接口和特性，冗长、难用。在node.js基础上实现了express
+其理念和jquery类似，对底层接口进行封装，简化代码的同时提供更高级的接口。
+
+1、全局安装express模板生成器
+npm install -g express-generator
+
+2、express的静态服务,使用静态服务中间件express.static
+var app = express();
+app.use(express.static('public'))
+
+3、三种路由方法
+一、Path 路径
+app.get("/", function(req, res) {
+  res.send("hello world");
+});
+二、Router 请求方法(适合同一个路由下的子路由)
+var router = express.Router();
+var listRouter = router.get('/list', function(req, res, next) {
+
+});
+app.use('/post', listRouter);
+
+三、route
+app
+  .route("/article")
+  .get(function(req, res) {
+    res.end("get");
+  })
+  .post(function(req, res) {
+    res.end("post");
+  });
+
+4、路由参数
+  app.param('newsId', function(req, res, next, newsId) {
+    req.newsId = newsId;
+    next();
+  });
+
+  app.get('/news/:newsId', function(req, res) {
+    res.end('newsId:' + req.newsId + '\n');
+  });
+
+5、tcp服务
+
+6、Redis
